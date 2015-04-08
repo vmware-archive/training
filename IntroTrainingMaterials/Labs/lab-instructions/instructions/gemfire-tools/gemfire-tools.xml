@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. -->
+<chapter id="tools_lab">
+  <title>Using GemFire Tools</title>
+  <section>
+    <title>Introduction</title>
+    <para>In this lab, you will use gfsh to launch and exit GemFire members and locator. In
+      addition, you will use Pulse to monitor the members</para>
+    <para><emphasis role="bold">What you will gain experience with:</emphasis><itemizedlist>
+        <listitem>
+          <para>How to launch GemFire members by using gfsh</para>
+        </listitem>
+        <listitem>
+          <para>Monitor GemFire members by using Pulse</para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
+  <section>
+    <title>Instructions</title>
+    <section>
+      <title>Start GemFire Locator using gfsh</title>
+      <para>
+        <orderedlist>
+          <listitem>
+            <para>Start a Command prompt window, and add the example class directories to your
+              CLASSPATH (if not done as a part of the earlier
+              practice<programlisting>set CLASSPATH=
+  &lt;product_directory>\ SampleCode\tutorial\classes;
+  &lt;product_directory>\SampleCode\helloworld\classes;
+  &lt;product_directory>\SampleCode\quickstart\classes;
+  &lt;product_directory>\SampleCode\examples\dist\classes;
+  &lt;product_directory>\lib\gemfire.jar;%CLASSPATH%</programlisting></para>
+            <para>where &lt;<literal>product_directory</literal>> corresponds to the location where
+              you installed GemFire.<important>
+                <para>Make sure that for each Command prompt window, you need to set the required
+                    <literal>PATH</literal> as mentioned in the installation practice</para>
+              </important></para>
+          </listitem>
+          <listitem>
+            <para>Change directories to the tutorial directory,
+                <filename>&lt;product_directory>/SampleCode/tutorial</filename> . For
+              example<programlisting>$ cd &lt;product_directory>/SampleCode/tutorial</programlisting></para>
+          </listitem>
+          <listitem>
+            <para>Type the following command at the
+              prompt<programlisting>$ gfsh start locator --name=locator1 --port=55221 </programlisting></para>
+            <para>The locator process runs in the background, listening for connections on port 55221.<note>
+                <para>To stop the process, you can type</para>
+              </note></para>
+            <programlisting>$ gfsh -e "connect --locator=localhost[55221]" -e "stop locator --name=locator1"  </programlisting>
+            <para>But don't stop yet.</para>
+          </listitem>
+        </orderedlist>
+      </para>
+    </section>
+    <section>
+      <title>Start two GemFire Instances</title>
+      <para>You already have one window open where you started the locator. Start another terminal
+        window, and set the <literal>CLASSPATH</literal>. In each window, run the Peer
+        application<programlisting>$ java com.gemstone.gemfire.tutorial.Peer</programlisting></para>
+      <mediaobject>
+        <imageobject role="fo">
+          <imagedata fileref="images/gemfire-instances.png" width="4in"/>
+        </imageobject>
+        <imageobject role="html">
+          <imagedata fileref="images/gemfire-instances.png"/>
+        </imageobject>
+        <caption>Example  execution output</caption>
+      </mediaobject>
+    </section>
+    <section>
+      <title>Enter data for a Replicated region</title>
+      <orderedlist>
+        <listitem>
+          <para>In one of your terminal windows,
+            type:<programlisting>person Isabella
+person Ethan</programlisting></para>
+        </listitem>
+        <listitem>
+          <para>You will see the users show up in the both the
+            window.<programlisting>In region people created key Isabella value Profile 
+[friends=[]]
+In region people created key Ethan value Profile 
+[friends=[]]</programlisting></para>
+          <para>This is because the cache listener, attached to the region fires notification on
+            both the GemFire instances. This means that the data got replicated on both the
+            instances.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Enter data for a Partitioned region</title>
+      <orderedlist>
+        <listitem>
+          <para>Start another Command prompt Window and launch the peer application in that Window.
+            Make sure to set the <literal>CLASSPATH</literal> for the new Window before executing
+            any
+            application.<programlisting>java com.gemstone.gemfire.tutorial.Peer</programlisting></para>
+          <para>You should have three peers running now.</para>
+        </listitem>
+        <listitem>
+          <para>Add some posts in any of the terminal window. For
+            example<programlisting>> post Isabella I like toast
+> post Isabella LOL!
+> post Ethan Hello</programlisting></para>
+          <para>You see the notification in only one of the Peers, and not all of them unlike the
+            'person' notification. That's because partitioned regions make one copy of the post, the
+            primary copy. By default GemFire only invokes the listener in the peer that holds the
+            primary copy of each post.</para>
+        </listitem>
+        <listitem>
+          <para>From any window, list the available posts with the posts command. You should be able
+            to list all posts, because GemFire fetches them from the peer that hosts each
+            post.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Launch Pulse for Monitoring</title>
+      <orderedlist>
+        <listitem>
+          <para>Enter the following command to launch
+            pulse:<programlisting>gfsh -e "connect --locator localhost[55221]" -e "start pulse"</programlisting></para>
+        </listitem>
+        <listitem>
+          <para> Enter '<literal>admin</literal>/<literal>admin</literal>' for the username and
+            password, and log in.</para>
+        </listitem>
+        <listitem>
+          <para>Click on the respective servers and locator icons to view their respective
+            information.</para>
+        </listitem>
+        <listitem>
+          <para>Stop all the servers and locator. For
+            example:<programlisting>gfsh -e "connect --locator localhost[55221]" -e "stop locator --name=locator1"</programlisting></para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+</chapter>

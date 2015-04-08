@@ -1,0 +1,227 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. -->
+<chapter id="query_lab">
+  <title>Executing OQL Queries</title>
+  <section>
+    <title>Introduction</title>
+    <para>In this lab, you will instantiate couple of GemFire servers, and use a GemFire client
+      application to populate and modify data in the servers. Then, you will use the GemFire
+      DataBrowser tool to execute OQL queries on the data residing in the servers.</para>
+    <para><emphasis role="bold">What you will gain experience with:</emphasis><itemizedlist>
+        <listitem>
+          <para>How to start the GemFire members (servers and locator) by using gfsh utility.</para>
+        </listitem>
+        <listitem>
+          <para>Execute a Java GemFire application client to add data.</para>
+        </listitem>
+        <listitem>
+          <para>Launch GemFire DataBrowser tool, and execute OQL queries on the data.</para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
+  <section>
+    <title>Instructions</title>
+    <section>
+      <title>Start GemFire Locator using gfsh</title>
+      <orderedlist>
+        <listitem>
+          <para>Start a Command prompt window, and add the example class directories to your
+              <literal>CLASSPATH</literal> (if not done as a part of the earlier
+            practice).<programlisting>set CLASSPATH=
+&lt;product_directory>\ SampleCode\tutorial\classes;
+&lt;product_directory>\SampleCode\helloworld\classes;
+&lt;product_directory>\SampleCode\quickstart\classes;
+&lt;product_directory>\SampleCode\examples\dist\classes;
+&lt;product_directory>\lib\gemfire.jar;%CLASSPATH%</programlisting></para>
+          <para>where &lt;<literal>product_directory</literal>> corresponds to the location where
+            you installed GemFire.<important>
+              <para>Make sure that for each Command prompt window, you need to set the required
+                  <literal>PATH</literal> as mentioned in the installation practice.</para>
+            </important></para>
+        </listitem>
+        <listitem>
+          <para>Change directories to the tutorial directory,
+            &lt;product_directoy>/SampleCode/tutorial . For
+            example:<programlisting>$ cd &lt;product_directory>/SampleCode/tutorial</programlisting></para>
+        </listitem>
+        <listitem>
+          <para>Type the following command at the
+            prompt:<programlisting>$ gfsh start locator --name=locator1 --port=55221</programlisting></para>
+          <para>The locator process runs in the background, listening for connections on port
+            55221.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Start two GemFire Cache Servers using gfsh</title>
+      <orderedlist>
+        <listitem>
+          <para>From the tutorial directory, start the first cache
+            server:<programlisting>$ gfsh start server --name=server1 --locators=localhost[55221]  --cache-xml-file=./xml/server.xml
+--server-port=0</programlisting></para>
+          <para>This command will automatically create a working directory for this server named
+              <emphasis role="bold">server1</emphasis> under the
+              <filename>&lt;product_directory>/SampleCode /tutorial</filename> directory where you
+            executed the command.</para>
+        </listitem>
+        <listitem>
+          <para>Next start a second cache server by executing the following command in the same
+            terminal:<programlisting>$ gfsh start server --name=server2 --locators=localhost[55221]  --cache-xml-file=./xml/server.xml
+ --server-port=0</programlisting></para>
+          <para>This command will automatically create a working directory for this server named
+              <emphasis role="bold">server2</emphasis> under the
+              <filename>&lt;product_directory>/SampleCode/tutorial</filename> directory where you
+            executed the command.</para>
+          <para>You should now have two GemFire peers (cache servers) that are listening for client
+            connections.</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Start the Client Application</title>
+      <orderedlist>
+        <listitem>
+          <para>Open a seperate terminal windows, and start the client application.<programlisting>$ java com.gemstone.gemfire.tutorial.Client</programlisting><caution>
+              <para>Make sure that you set the required PATH and CLASSPATH before executing the
+                client.</para>
+            </caution></para>
+        </listitem>
+        <listitem>
+          <para>Enter the following information from the client<orderedlist>
+              <listitem>
+                <para>Add the following persons with their
+                  friends:<programlisting>> person Ethan Isabella Alice
+> person Mary John Alice
+> person May Tom Jhon </programlisting></para>
+              </listitem>
+              <listitem>
+                <para>Notice that the following message appears for each person you add:<programlisting>In region people created key Ethan value Profile 
+[friends=[ Alice , Isabella]] 
+...</programlisting><mediaobject>
+                    <imageobject role="fo">
+                      <imagedata fileref="images/client_execution.png" width="5in"/>
+                    </imageobject>
+                    <imageobject role="html">
+                      <imagedata fileref="images/client_execution.png"/>
+                    </imageobject>
+                  </mediaobject></para>
+              </listitem>
+              <listitem>
+                <para>Similarly, add some posts for each person. For
+                  example:<programlisting>> post Ethan I like toast
+> post Mary LOL!
+> post Ethan Hello
+> post Mary Good Morning!!!. . .</programlisting></para>
+              </listitem>
+            </orderedlist></para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Lauch the DataBrowser Tool</title>
+      <orderedlist>
+        <listitem>
+          <para>Navigate to <filename>&lt;product_directory>\tools\DataBrowser\bin</filename>
+            directory. Execute <filename>databrowser.bat</filename> to lauch the application.</para>
+        </listitem>
+        <listitem>
+          <para>Connect to the GemFire locator from the DataBrowser window. Provide the locator's
+            hostname and port number:<mediaobject>
+              <imageobject role="fo">
+                <imagedata fileref="images/data-browser.png" width="5in"/>
+              </imageobject>
+              <imageobject role="html">
+                <imagedata fileref="images/data-browser.png"/>
+              </imageobject>
+            </mediaobject><note>
+              <para>Alternatively, you can use gfsh to connect to the locator, and then start
+                DataBrowser by using the '<command>start data-browser</command>' command</para>
+            </note></para>
+        </listitem>
+        <listitem>
+          <para>After connecting, you see the GemFire Regions on the left pane, and also the members
+            hosting the Regions in the pane below.<mediaobject>
+              <imageobject role="fo">
+                <imagedata fileref="images/data-browser-regions.png" width="4in"/>
+              </imageobject>
+              <imageobject role="html">
+                <imagedata fileref="images/data-browser-regions.png"/>
+              </imageobject>
+            </mediaobject></para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Execute OQL Queries</title>
+      <orderedlist>
+        <listitem>
+          <para>Enter the following query string, and click Execute Query to see the
+            result:<programlisting>Select * from /posts</programlisting></para>
+          <mediaobject>
+            <imageobject role="fo">
+              <imagedata fileref="images/data-browser-query.png" width="5in"/>
+            </imageobject>
+            <imageobject role="html">
+              <imagedata fileref="images/data-browser-query.png"/>
+            </imageobject>
+          </mediaobject>
+          <para>You see the results above in the Results pane.</para>
+        </listitem>
+        <listitem>
+          <para>By default, DataBrowser only identifies the system types. If you need to work with
+            user-defined types, you have to import the types as JAR file within the DataBrowser. To
+            accomplish this task, create the following JAR
+            file:<programlisting>jar cvf classes.jar
+com\gemstone\gemfire\tutorial\model\Profile.class 
+com\gemstone\gemfire\tutorial\model\PostID.class</programlisting></para>
+          <para>You can find these class files in the
+              <filename>&lt;product_directory>/SampleCode/tutorial/classes</filename>
+            directory</para>
+        </listitem>
+        <listitem>
+          <para>Import the JAR file within DataBrowser. Click <emphasis role="bold">Options >
+              Preferences</emphasis>. In the following window, add the JAR file you created as follows:<mediaobject>
+              <imageobject role="fo">
+                <imagedata fileref="images/data-browser-jars.png" width="5in"/>
+              </imageobject>
+              <imageobject role="html">
+                <imagedata fileref="images/data-browser-jars.png"/>
+              </imageobject>
+            </mediaobject></para>
+        </listitem>
+        <listitem>
+          <para>Execute some more queries. For example,<orderedlist>
+              <listitem>
+                <para>To find all the post from
+                  Ethan<programlisting>select p.value from /posts.entries p  WHERE p.key.author='Ethan'</programlisting></para>
+              </listitem>
+              <listitem>
+                <para>To find all people who have listed Alice as a
+                  friend<programlisting>select p.key from /people.entrySet p, p.value.friends f where f='Alice'</programlisting></para>
+              </listitem>
+            </orderedlist></para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Shut down the Server Locators</title>
+      <orderedlist>
+        <listitem>
+          <para>Exit Client: Enter 'Quit'</para>
+        </listitem>
+        <listitem>
+          <para>Shut down server1:
+            <programlisting>$ gfsh -e "connect --locator=localhost[55221]" -e "stop server --name=server1" </programlisting></para>
+        </listitem>
+        <listitem>
+          <para>Shut down
+            server2:<programlisting>$ gfsh -e "connect --locator=localhost[55221]" -e "stop server --name=server2" </programlisting></para>
+        </listitem>
+        <listitem>
+          <para>Shut down
+            locator:<programlisting>$ gfsh -e "connect --locator=localhost[55221]" -e "stop locator --name=locator1"</programlisting></para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+</chapter>

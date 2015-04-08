@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--
+   // Course Build - Lab Manuals
+   -->
+<project name="gf-lab-docs" default="help">
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!--                     Course Specific Properties                      -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Root directory of this course.  Everything else is relative. -->
+    <property name="project.root.dir" value=".."/>
+
+    <!-- One of these _must_ specify 'course.build.dir' property -->
+
+    <!-- Developer specific properties. -->
+    <property file="${user.home}/build.properties"/>
+
+    <!-- Developer specific properties. -->
+    <property file="${project.root.dir}/build.properties"/>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!--                     Import Properties and Tasks                     -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- Course configuration properties -->
+    <import file="${course.build.dir}/course-properties.xml" />
+
+    <!-- Targets to manage Open Office -->
+    <import file="${course.build.dir}/soffice-targets.xml" />
+
+    <!-- Targets to process lab-manuals are in here -->
+    <import file="${course.build.dir}/doc-targets.xml" />
+
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!--                               Targets                               -->
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <!-- List available targets -->
+    <target name="help">
+        <echo message="Valid targets are: "/>
+        <echo message="   all      - clean and run lab-docs"/>
+        <echo message="   clean    - remove target directory and all contents"/>
+        <echo message="   html     - generate HTML lab-docs"/>
+        <echo message="   info     - show configuration"/>
+        <echo message="   install  - runs clean, lab-docs and package"/>
+        <echo message="   lab-docs - clean then generate lab manual as PDF and HTML"/>
+        <echo message="   pdf      - generate PDF lab-docs manual"/>
+        <echo message="   package  - package all materials to ${target.dir}"/>
+    </target>
+
+    <!-- Aliases -->
+    <target name="all"       depends="make-lab-docs"/>
+    <target name="clean"     depends="clean-lab-docs"/>
+    <target name="html"      depends="make-lab-docs-html"/>
+    <target name="info"      depends="lab-docs-info"/>
+    <target name="install"   depends="install-lab-docs"/>
+    <target name="lab-docs"  depends="make-lab-docs"/>
+    <target name="pdf"       depends="make-lab-docs-pdf"/>
+    <target name="package"   depends="package-lab-docs"/>
+
+</project>

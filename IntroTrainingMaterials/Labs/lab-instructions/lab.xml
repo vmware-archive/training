@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<!-- * * * * AUTO-GENERATED: DO NOT MODIFY THIS FILE * * * * -->
+
+<!DOCTYPE book PUBLIC '-//OASIS//DTD DocBook XML V4.4//EN'
+'../../../../docbook/docbook-xml-4.4/docbookx.dtd'
+[
+<!ENTITY lab_installation                        SYSTEM "installation.xml">
+<!ENTITY lab_gemfire_tools                       SYSTEM "gemfire-tools.xml">
+<!ENTITY lab_query                               SYSTEM "query.xml">
+]>
+
+<book>
+    <bookinfo>
+        <title>GemFire Introduction Course - Lab Documentation</title>
+    </bookinfo>
+    <toc />
+
+    <!-- Section: intro -->
+    &lab_installation;
+    &lab_gemfire_tools;
+    &lab_query;
+</book>

@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- This document was created with Syntext Serna Free. --><chapter id="Installation_lab">
+  <title>Installation and Configuration</title>
+  <section>
+    <title>Introduction</title>
+    <para>Welcome to the GemFire introduction course. We have tried to make the lab setup as simple
+      as possible. In this procedure it is assumed that you know how to configure environment
+      variables for your operating system.</para>
+    <para><emphasis role="bold">What you will gain experience with:</emphasis><itemizedlist>
+        <listitem>
+          <para>How to install and configure GemFire, and the lab environment</para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
+  <section>
+    <title>Instructions</title>
+    <section>
+      <title>Installation Prerequisites</title>
+      <orderedlist>
+        <listitem>
+          <para> Make sure that your system meets the  System Requirements listed. Refer to the
+            product documentation at http://docs.gopivotal.com/gemfire/.</para>
+        </listitem>
+        <listitem>
+          <para>Check that your Java version is appropriate and that Java is on your path. To check
+            your current Java version, type java -version at a command-line. Your output should look
+            something like
+            this:<programlisting><para>java version "1.6.0_26"
+Java(TM) SE Runtime Environment (build 1.6.0_26-b03-384-10M3425)
+Java HotSpot(TM) 64-Bit Server VM (build 20.1-b02-384, mixed mode)</para></programlisting></para>
+        </listitem>
+        <listitem>
+          <para> To install GemFire, you will need Java Runtime Environment 1.6.0 or higher. If this
+            command returned an error, that means Java is either not installed, or not on your
+              <literal>PATH</literal> . </para>
+          <para>You can download Sun/Oracle Java SE <ulink
+              url="http://www.oracle.com/technetwork/java/javase/downloads/index.html"
+              >here</ulink>.<ulink
+              url="http://www.oracle.com/technetwork/java/javase/downloads/index.html"
+              >http://www.oracle.com/technetwork/java/javase/downloads/index.html</ulink></para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Install GemFire</title>
+      <orderedlist>
+        <listitem>
+          <para>From the <ulink url="http://www.gopivotal.com/big-data/pivotal-gemfire">Pivotal
+              downloads</ulink> (http://www.gopivotal.com/big-data/pivotal-gemfire) page, select and
+            download the evaluation version of Pivotal GemFire</para>
+        </listitem>
+        <listitem>
+          <para>Download the ZIP distribution Pivotal GemFire distributed as a ZIP file</para>
+        </listitem>
+        <listitem>
+          <para>Open the .zip file, and extract the product files to the desired installation
+            location on your machine</para>
+        </listitem>
+      </orderedlist>
+    </section>
+    <section>
+      <title>Configuring the Command Line Interface (CLI)</title>
+      <para>You might be required to use the CLI for executing some of the GemFire commands.
+        Therefore, you need to set the environment variables before executing the GemFire commands<orderedlist>
+          <listitem>
+            <para>Make sure <literal>JAVA_HOME</literal> is set</para>
+          </listitem>
+          <listitem>
+            <para> Set the <literal>GEMFIRE</literal> environment variable to point to your GemFire
+              installation top-level directory (for example <filename>C:\
+                Pivotal_GemFire_702_b45797</filename> )</para>
+          </listitem>
+          <listitem>
+            <para>Ensure the <literal>PATH</literal> and <literal>CLASSPATH</literal> are set</para>
+            <para><emphasis role="bold"
+              >Unix</emphasis><programlisting>PATH=$PATH:$JAVA_HOME/bin:$GEMFIRE/bin; 
+export PATH
+CLASSPATH=$GEMFIRE/lib/gemfire.jar:$GEMFIRE/lib/antlr.jar:\
+$GEMFIRE/lib/gfSecurityImpl.jar:$CLASSPATH; 
+export CLASSPATH</programlisting></para>
+            <para><emphasis role="bold"
+              >Windows</emphasis><programlisting>set PATH=%PATH%;%JAVA_HOME%\bin;%GEMFIRE%\bin 
+set CLASSPATH=%GEMFIRE%\lib\gemfire.jar;%GEMFIRE%\lib\
+antlr.jar;%GEMFIRE%\lib\gfSecurityImpl.jar;%CLASSPATH%</programlisting></para>
+          </listitem>
+        </orderedlist></para>
+    </section>
+    <section>
+      <title>Setting up the QuickStart Examples</title>
+      <para>The quickstart samples demonstrate how to implement specific functionality in GemFire.
+        You can find the quickstart sample applications within the <filename>\
+          Pivotal_GemFire_702_b45797\SampleCode</filename> directory.</para>
+      <para>To execute any of the sample applications, add the example class directories to your
+          <literal>CLASSPATH</literal>. You need these examples subdirectories in your
+          <literal>CLASSPATH</literal> to run all of the sample applications:<itemizedlist>
+          <listitem>
+            <para><filename>tutorial/classes</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>helloworld/classes</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>quickstart/classes</filename></para>
+          </listitem>
+          <listitem>
+            <para><filename>examples/dist/classes</filename></para>
+          </listitem>
+        </itemizedlist></para>
+      <para><emphasis role="bold"
+        >Windows</emphasis><programlisting>set CLASSPATH=
+  &lt; product_directory>\SampleCode\tutorial\classes;
+  &lt; product_directory>\SampleCode\helloworld\classes;
+  &lt; product_directory>\SampleCode\quickstart\classes;
+  &lt; product_directory>\SampleCode\examples\dist\classes;%CLASSPATH%</programlisting></para>
+      <para>where &lt;<literal>product_directory</literal>> corresponds to the location where you
+        installed Pivotal GemFire.</para>
+    </section>
+  </section>
+</chapter>
